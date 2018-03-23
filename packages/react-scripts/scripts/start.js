@@ -29,6 +29,7 @@ if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
 }
 // @remove-on-eject-end
 
+const fs = require('fs');
 const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
@@ -43,9 +44,12 @@ const {
 const openBrowser = require('react-dev-utils/openBrowser');
 const paths = require('../config/paths');
 const config = require('../config/webpack.config.dev');
+const configSsr = require('../config/webpack.config.server');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 
 const isInteractive = process.stdout.isTTY;
+
+const shouldSsr = fs.existsSync(paths.appSsrJs);
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -93,7 +97,7 @@ checkBrowsers(paths.appPath)
     // Create a webpack compiler that is configured with custom messages.
     const compiler = createCompiler(
       webpack,
-      config,
+      shouldSsr ? [config, configSsr] : config,
       appName,
       urls,
       paths.useYarn
@@ -106,6 +110,24 @@ checkBrowsers(paths.appPath)
       proxyConfig,
       urls.lanUrlForConfig
     );
+
+    if (shouldSsr) {
+      const express = require('express');
+      const webpackDevMiddleware = require('webpack-dev-middleware');
+      const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
+      const app = express();
+      app.use(webpackDevMiddleware(compiler, serverConfig));
+      app.use(webpackHotServerMiddleware(compiler));
+      app.listen(port, HOST, err => {
+        if (err) {
+          return console.log(err);
+        }
+        console.log(chalk.cyan('Starting the development server...\n'));
+        openBrowser(urls.localUrlForBrowser);
+      });
+      return;
+    }
+
     const devServer = new WebpackDevServer(compiler, serverConfig);
     // Launch WebpackDevServer.
     devServer.listen(port, HOST, err => {

@@ -70,7 +70,12 @@ module.exports = function(proxy, allowedHost) {
     publicPath: config.output.publicPath,
     // WebpackDevServer is noisy by default so we emit custom message instead
     // by listening to the compiler events with `compiler.plugin` calls above.
-    quiet: true,
+    // quiet: true,
+    stats: {
+      colors: true,
+      modules: false,
+      publicPath: true,
+    },
     // Reportedly, this avoids CPU overload on some systems.
     // https://github.com/facebook/create-react-app/issues/293
     // src/node_modules is not ignored to support absolute imports
