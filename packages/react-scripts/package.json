@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "1.1.1",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "name": "@hrasoa/react-scripts",
+  "version": "0.0.0",
+  "description": "Servers-side Create React App.",
+  "repository": "hrasoa/create-react-app",
   "license": "MIT",
   "engines": {
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/hrasoa/create-react-app/issues"
   },
   "files": [
     "bin",
