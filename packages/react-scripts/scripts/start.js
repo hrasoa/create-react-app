@@ -112,7 +112,7 @@ checkBrowsers(paths.appPath)
 
     const devServer = shouldSsr
       ? require(paths.appDevServer)(compiler, serverConfig)
-      : new WebpackDevServer(compiler, serverConfig);
+      : new WebpackDevServer(compiler, serverConfig, HOST, port, urls);
 
     // Launch WebpackDevServer.
     devServer.listen(port, HOST, err => {
