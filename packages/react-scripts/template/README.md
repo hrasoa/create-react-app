@@ -136,6 +136,10 @@ my-app/
   README.md
   node_modules/
   package.json
+  server/
+    dev.js
+    prod.js
+    render.js
   public/
     index.html
     favicon.ico
@@ -152,6 +156,9 @@ For the project to build, **these files must exist with exact filenames**:
 
 * `public/index.html` is the page template;
 * `src/index.js` is the JavaScript entry point.
+* `server/dev.js` is the dev server.
+* `server/dev.js` is the production server.
+* `server/render.js` is the server render function.
 
 You can delete or rename the other files.
 
