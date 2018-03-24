@@ -8,7 +8,7 @@ export default function serverRenderer() {
       <!doctype html>
         <html>
         <head>
-            <title>App</title>
+          <title>App</title>
         </head>
         <body>
           <div id="root">
