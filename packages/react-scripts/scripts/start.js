@@ -45,6 +45,7 @@ const isInteractive = process.stdout.isTTY;
 const shouldSsr = paths.shouldSsr;
 
 // Warn and crash if required files are missing
+console.log('shouldSsr', shouldSsr);
 if (
   !checkRequiredFiles(
     [
@@ -90,7 +91,7 @@ choosePort(HOST, DEFAULT_PORT)
     // Create a webpack compiler that is configured with custom messages.
     const compiler = createCompiler(
       webpack,
-      configSsr ? [config, configSsr] : [],
+      shouldSsr ? [config, configSsr] : config,
       appName,
       urls,
       useYarn

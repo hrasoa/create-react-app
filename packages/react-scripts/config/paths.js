@@ -127,4 +127,3 @@ if (
 // @remove-on-eject-end
 
 module.exports.shouldSsr = fs.existsSync(module.exports.appSsrJs);
-// module.exports.shouldSsr = false;
