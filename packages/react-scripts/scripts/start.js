@@ -119,7 +119,7 @@ checkBrowsers(paths.appPath)
     );
 
     const devServer = shouldSsr
-      ? require(paths.appDevServer)(compiler, serverConfig)
+      ? require(paths.appDevServer)(compiler, serverConfig, port, HOST, urls)
       : new WebpackDevServer(compiler, serverConfig, HOST, port, urls);
 
     // Launch WebpackDevServer.
