@@ -37,13 +37,23 @@ const {
 const openBrowser = require('react-dev-utils/openBrowser');
 const paths = require('../config/paths');
 const config = require('../config/webpack.config.dev');
+const configSsr = require('../config/webpack.config.server');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
+const shouldSsr = paths.shouldSsr;
 
 // Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+if (
+  !checkRequiredFiles(
+    [
+      shouldSsr && paths.appDevServer,
+      !shouldSsr && paths.appHtml,
+      paths.appIndexJs,
+    ].filter(Boolean)
+  )
+) {
   process.exit(1);
 }
 
@@ -78,7 +88,13 @@ choosePort(HOST, DEFAULT_PORT)
     const appName = require(paths.appPackageJson).name;
     const urls = prepareUrls(protocol, HOST, port);
     // Create a webpack compiler that is configured with custom messages.
-    const compiler = createCompiler(webpack, config, appName, urls, useYarn);
+    const compiler = createCompiler(
+      webpack,
+      configSsr ? [config, configSsr] : [],
+      appName,
+      urls,
+      useYarn
+    );
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
     const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
@@ -87,7 +103,9 @@ choosePort(HOST, DEFAULT_PORT)
       proxyConfig,
       urls.lanUrlForConfig
     );
-    const devServer = new WebpackDevServer(compiler, serverConfig);
+    const devServer = shouldSsr
+      ? require(paths.appDevServer)(compiler, serverConfig, port, HOST, urls)
+      : new WebpackDevServer(compiler, serverConfig);
     // Launch WebpackDevServer.
     devServer.listen(port, HOST, err => {
       if (err) {
@@ -102,7 +120,7 @@ choosePort(HOST, DEFAULT_PORT)
 
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {
       process.on(sig, function() {
-        devServer.close();
+        devServer.close && devServer.close();
         process.exit();
       });
     });
