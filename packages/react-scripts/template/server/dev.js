@@ -6,7 +6,7 @@ const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
 const app = express();
 
 module.exports = (compiler, serverConfig) => {
-  app.use(webpackDevMiddleware(compiler));
+  app.use(webpackDevMiddleware(compiler, serverConfig));
   app.use(
     webpackHotMiddleware(
       compiler.compilers.find(compiler => compiler.name === 'client')
