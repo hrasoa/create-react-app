@@ -55,9 +55,11 @@ module.exports = {
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
-  appSsrJs: resolveApp('src/serverRender.js'),
+  appSsrJs: resolveApp('server/render.js'),
+  appDevServer: resolveApp('server/dev.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
+  appServer: resolveApp('server'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
@@ -77,9 +79,11 @@ module.exports = {
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
-  appSsrJs: resolveApp('src/serverRender.js'),
+  appSsrJs: resolveApp('server/render.js'),
+  appDevServer: resolveApp('server/dev.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
+  appServer: resolveApp('server'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
@@ -103,9 +107,11 @@ if (useTemplate) {
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
     appIndexJs: resolveOwn('template/src/index.js'),
-    appSsrJs: resolveApp('template/src/serverRender.js'),
+    appSsrJs: resolveOwn('template/server/render.js'),
+    appDevServer: resolveOwn('template/server/dev.js'),
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
+    appServer: resolveOwn('template/server'),
     testsSetup: resolveOwn('template/src/setupTests.js'),
     appNodeModules: resolveOwn('node_modules'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
@@ -117,11 +123,13 @@ if (useTemplate) {
 }
 // @remove-on-eject-end
 
-module.exports.srcPaths = [module.exports.appSrc];
+module.exports.srcPaths = [module.exports.appSrc, module.exports.appServer];
 
 module.exports.useYarn = fs.existsSync(
   path.join(module.exports.appPath, 'yarn.lock')
 );
+
+module.exports.shouldSsr = fs.existsSync(module.exports.appSsrJs);
 
 if (checkForMonorepo) {
   // if app is in a monorepo (lerna or yarn workspace), treat other packages in

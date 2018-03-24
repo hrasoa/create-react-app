@@ -10,7 +10,6 @@
 
 const autoprefixer = require('autoprefixer');
 const path = require('path');
-const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -46,7 +45,7 @@ const postCSSLoaderOptions = {
   ],
 };
 
-const shouldSsr = fs.existsSync(paths.appSsrJs);
+const shouldSsr = paths.shouldSsr;
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.

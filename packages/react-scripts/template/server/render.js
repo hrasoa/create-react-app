@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import App from './App';
+import App from '../src/App';
 
 export default function serverRenderer() {
   return (req, res) => {
