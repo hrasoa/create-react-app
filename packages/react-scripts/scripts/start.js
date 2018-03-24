@@ -51,7 +51,15 @@ const isInteractive = process.stdout.isTTY;
 const shouldSsr = paths.shouldSsr;
 
 // Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+if (
+  !checkRequiredFiles(
+    [
+      shouldSsr && paths.appDevServer,
+      !shouldSsr && paths.appHtml,
+      paths.appIndexJs,
+    ].filter(Boolean)
+  )
+) {
   process.exit(1);
 }
 
