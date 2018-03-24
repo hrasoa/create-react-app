@@ -38,6 +38,7 @@ module.exports = function(
   // Setup the script rules
   appPackage.scripts = {
     start: 'react-scripts start',
+    'start:prod': 'NODE_ENV=production node server/prod.js',
     build: 'NODE_ENV=production react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
