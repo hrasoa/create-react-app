@@ -11,7 +11,7 @@ export default function serverRenderer({ clientStats }) {
     const { assetsByChunkName, publicPath } = clientStats;
     res.status(200).send(`
       <!doctype html>
-        <html>
+      <html>
         <head>
           <title>App</title>
           ${normalizeAssets(assetsByChunkName.main)
