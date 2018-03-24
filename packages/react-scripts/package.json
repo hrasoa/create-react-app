@@ -92,8 +92,5 @@
       "Firefox ESR",
       "not ie < 11"
     ]
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
