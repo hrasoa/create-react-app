@@ -8,6 +8,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Updating to New Releases](#updating-to-new-releases)
 - [Sending Feedback](#sending-feedback)
 - [Folder Structure](#folder-structure)
+- [Server-side rendering](#server-side-rendering)
 - [Available Scripts](#available-scripts)
   - [npm start](#npm-start)
   - [npm test](#npm-test)
@@ -156,9 +157,6 @@ For the project to build, **these files must exist with exact filenames**:
 
 * `public/index.html` is the page template;
 * `src/index.js` is the JavaScript entry point.
-* `server/dev.js` is the dev server.
-* `server/prod.js` is the production server.
-* `server/render.js` is the server render function.
 
 You can delete or rename the other files.
 
@@ -170,6 +168,16 @@ Read instructions below for using assets from JavaScript and HTML.
 
 You can, however, create more top-level directories.<br>
 They will not be included in the production build so you can use them for things like documentation.
+
+## Server-side rendering
+
+For the project to use server-side rendering, **these files must exist with exact filenames**: 
+
+* `server/dev.js` is the dev server.
+* `server/prod.js` is the production server.
+* `server/render.js` is the server render function.
+
+If you don't want the server-side rendering fuctionnality, you can safely rename/delete the whole `server` folder.
 
 ## Available Scripts
 
